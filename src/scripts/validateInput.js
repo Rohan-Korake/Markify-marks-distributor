@@ -29,6 +29,20 @@ export function validateInput() {
     hideError(totalExperimentError);
   }
 
+  // AVG MARK
+  if (!avgMark) {
+    showError(avgMarkError, "Field required.");
+    return false;
+  } else if (!isNumber(avgMark)) {
+    showError(avgMarkError, "Enter a number.");
+    return false;
+  } else if (!isPositive(avgMark)) {
+    showError(avgMarkError, "Must be positive.");
+    return false;
+  } else {
+    hideError(avgMarkError);
+  }
+
   // MAX MARK
   if (!maxMark) {
     showError(maxMarkError, "Field required.");
@@ -42,22 +56,11 @@ export function validateInput() {
   } else if (!isInteger(maxMark)) {
     showError(maxMarkError, "Integers only.");
     return false;
+  } else if (avgMark > maxMark) {
+    showError(maxMarkError, "Must be at least the average.");
+    return false;
   } else {
     hideError(maxMarkError);
-  }
-
-  // AVG MARK
-  if (!avgMark) {
-    showError(avgMarkError, "Field required.");
-    return false;
-  } else if (!isNumber(avgMark)) {
-    showError(avgMarkError, "Enter a number.");
-    return false;
-  } else if (!isPositive(avgMark)) {
-    showError(avgMarkError, "Must be positive.");
-    return false;
-  } else {
-    hideError(avgMarkError);
   }
 
   return true;
