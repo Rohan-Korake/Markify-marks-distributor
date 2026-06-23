@@ -1,50 +1,177 @@
 // global declaration
-let totalRequiredMarks = 0;
-let remainingExperiment = 0;
+let distributionData = {};
 
-// export function
-export async function handleDistribution() {
-  const totalExperiment = Number(
-    document.getElementById("totalExperiment").value
-  );
-  const maxMark = Number(document.getElementById("maxMark").value);
-  const avgMark = Number(document.getElementById("avgMark").value);
-  const totalMaxMarks = totalExperiment * maxMark;
-  await storeResultData("totalMarks", totalMaxMarks);
-  totalRequiredMarks = totalExperiment * avgMark;
-  await storeResultData("totalMarksRequired", totalRequiredMarks);
-  remainingExperiment = totalExperiment;
+// result object
+export let resultData = {};
 
-  //   generate assinged marks array
-  let assignedMarks = generateAssignedMarks(avgMark, maxMark);
+function initializeVariables() {
+  distributionData = {
+    totalMaxMarks: 0,
+    totalRequiredMarks: 0,
+    remainingMarks: 0,
+    totalExperiment: 0,
+    totalCalculatedMarks: 0,
+    remainingExperiment: 0,
+    maxMark: 0,
+    avgMark: 0,
+  };
 
-  console.log(remainingExperiment);
-  console.log(totalRequiredMarks);
-  console.log(assignedMarks);
+  resultData = {};
 }
 
-// store the result data
-export let resultData = {};
 function storeResultData(key, value) {
   resultData[key] = value;
 }
 
-// generate assinged marks array
-function generateAssignedMarks(avgMark, maxMark) {
-  let assignedMarks = [];
+// export function
+export function handleDistribution() {
+  initializeVariables();
 
-  assignedMarks[0] = Math.floor(avgMark - 1);
-  totalRequiredMarks -= Math.floor(assignedMarks[0]);
-  remainingExperiment--;
+  distributionData.totalExperiment = Number(
+    document.getElementById("totalExperiment").value
+  );
 
-  assignedMarks[1] = Math.floor(avgMark);
-  totalRequiredMarks -= Math.floor(assignedMarks[1]);
-  remainingExperiment--;
+  distributionData.maxMark = Number(document.getElementById("maxMark").value);
 
-  if (avgMark < maxMark) {
-    assignedMarks[2] = Math.floor(avgMark + 1);
-    totalRequiredMarks -= Math.floor(assignedMarks[2]);
-    remainingExperiment--;
+  distributionData.avgMark = Number(document.getElementById("avgMark").value);
+
+  distributionData.totalMaxMarks =
+    distributionData.totalExperiment * distributionData.maxMark;
+
+  distributionData.totalRequiredMarks =
+    distributionData.totalExperiment * distributionData.avgMark;
+
+  distributionData.remainingMarks = distributionData.totalRequiredMarks;
+
+  distributionData.remainingExperiment = distributionData.totalExperiment;
+
+  storeResultData("totalMarks", distributionData.totalMaxMarks);
+  storeResultData("totalMarksRequired", distributionData.totalRequiredMarks);
+
+  const assignedMarks = generateAssignedMarks();
+
+  distributeMark(assignedMarks);
+}
+
+// generate assigned marks array
+function generateAssignedMarks() {
+  const assignedMarks = [];
+
+  assignedMarks[0] = Math.floor(distributionData.avgMark - 1);
+  assignedMarks[1] = Math.floor(distributionData.avgMark);
+
+  if (distributionData.avgMark < distributionData.maxMark) {
+    assignedMarks[2] = Math.floor(distributionData.avgMark + 1);
   }
+
+  storeResultData("lowMark", assignedMarks[0]);
+  storeResultData("midMark", assignedMarks[1]);
+  storeResultData("highMark", assignedMarks[2] ?? "00");
+
+  // give one experiment to each mark
+  for (const mark of assignedMarks) {
+    distributionData.totalCalculatedMarks += mark;
+    distributionData.remainingMarks -= mark;
+    distributionData.remainingExperiment--;
+  }
+
   return assignedMarks;
+}
+
+function distributeMark(assignedMarks) {
+  let arrayIndex = 0;
+
+  const distribution = {};
+
+  // initialize counts
+  for (const mark of assignedMarks) {
+    distribution[mark] = 0;
+  }
+
+  // Step 1: Distribute evenly (23,24,25,23,24,25...)
+  let currentTotal = 0;
+
+  for (let i = 0; i < distributionData.totalExperiment; i++) {
+    const mark = assignedMarks[arrayIndex];
+
+    distribution[mark]++;
+    currentTotal += mark;
+
+    arrayIndex++;
+
+    if (arrayIndex >= assignedMarks.length) {
+      arrayIndex = 0;
+    }
+  }
+
+  const requiredTotal = distributionData.totalRequiredMarks;
+  let difference = requiredTotal - currentTotal;
+
+  // adjust to reach exact required total
+  while (difference > 0) {
+    let adjusted = false;
+
+    // Try low -> mid
+    if (assignedMarks.length >= 2 && distribution[assignedMarks[0]] > 0) {
+      distribution[assignedMarks[0]]--;
+      distribution[assignedMarks[1]]++;
+      difference -= assignedMarks[1] - assignedMarks[0];
+      adjusted = true;
+    }
+
+    if (difference <= 0) break;
+
+    // Try mid -> high
+    if (assignedMarks.length === 3 && distribution[assignedMarks[1]] > 0) {
+      distribution[assignedMarks[1]]--;
+      distribution[assignedMarks[2]]++;
+      difference -= assignedMarks[2] - assignedMarks[1];
+      adjusted = true;
+    }
+
+    if (!adjusted) break;
+  }
+
+  while (difference < 0) {
+    let adjusted = false;
+
+    // Try high -> mid
+    if (assignedMarks.length === 3 && distribution[assignedMarks[2]] > 0) {
+      distribution[assignedMarks[2]]--;
+      distribution[assignedMarks[1]]++;
+      difference += assignedMarks[2] - assignedMarks[1];
+      adjusted = true;
+    }
+
+    if (difference >= 0) break;
+
+    // Try mid -> low
+    if (assignedMarks.length >= 2 && distribution[assignedMarks[1]] > 0) {
+      distribution[assignedMarks[1]]--;
+      distribution[assignedMarks[0]]++;
+      difference += assignedMarks[1] - assignedMarks[0];
+      adjusted = true;
+    }
+
+    if (!adjusted) break;
+  }
+
+  // Calculate final total
+  let finalTotal = 0;
+
+  for (const mark in distribution) {
+    finalTotal += Number(mark) * distribution[mark];
+  }
+
+  distributionData.totalCalculatedMarks = finalTotal;
+  distributionData.remainingMarks =
+    distributionData.totalRequiredMarks - finalTotal;
+  distributionData.remainingExperiment = 0;
+
+  const values = Object.values(distribution);
+  storeResultData("lowMarkCount", values[0]);
+  storeResultData("midMarkCount", values[1]);
+  if (values[2]) {
+    storeResultData("highMarkCount", values[2]);
+  }
 }
