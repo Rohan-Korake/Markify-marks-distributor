@@ -8,9 +8,11 @@
   <link rel="shortcut icon" href="./src/assets/logo.svg" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <link rel="stylesheet" href="src/output.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@latest/dist/dotlottie-wc.js"></script>
 </head>
 
-<body class="min-h-screen overflow-x-hidden bg-slate-50 dark:bg-slate-950">
+<body class="min-h-screen overflow-x-hidden bg-slate-50 dark:bg-slate-950 flex justify-center items-center">
 
   <!-- Background Blur -->
   <div class="fixed inset-0 -z-10 overflow-hidden">
@@ -19,8 +21,18 @@
     <div class="absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-violet-500/10 blur-[120px]"></div>
   </div>
 
+  <!-- Loader -->
+  <div id="loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-950/95 backdrop-blur-md">
+    <div class="flex flex-col items-center">
+      <dotlottie-wc src="https://lottie.host/5abd9103-0e45-43aa-aa06-c75b46d7dfc1/NfPOZ7fdXv.lottie" autoplay
+        class="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[26rem] lg:h-[26rem]">
+      </dotlottie-wc>
+    </div>
+  </div>
+
+
   <!-- Main section -->
-  <main class="min-h-[90vh] flex items-center justify-center px-4 py-6">
+  <main id="mainContent" class="min-h-[90vh] flex items-center justify-center px-4 py-6">
     <!-- Main Card -->
     <div
       class="w-full max-w-sm sm:max-w-2xl lg:max-w-4xl rounded-[28px] sm:rounded-[32px] lg:rounded-[36px] border border-slate-200/70 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl shadow-[0_20px_80px_rgba(15,23,42,0.08)] dark:shadow-[0_20px_80px_rgba(0,0,0,0.5)] p-3 sm:p-8 lg:py-4 lg:px-10">
@@ -59,7 +71,8 @@
         </h2>
 
         <!-- marks summary card container  -->
-        <div id="summaryContainer" class="mt-6 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5"> </div>
+        <div id="summaryContainer" class="mt-6 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        </div>
 
         <!-- marks distribution card container -->
         <div id="distributionCardContainer" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
@@ -76,5 +89,6 @@
   </main>
 </body>
 <script src="src/scripts/main.js" type="module"></script>
+<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.14/dist/dotlottie-wc.js" type="module"></script>
 
 </html>

@@ -177,5 +177,6 @@ function distributeMark(assignedMarks) {
     storeResultData("highMarkCount", values[2]);
   }
 
+  storeResultData("roundedAvg", Math.ceil(distributionData.avgMark));
   renderResult(resultData);
 }

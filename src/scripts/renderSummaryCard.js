@@ -1,14 +1,19 @@
 export function renderSummaryCard() {
   const summaryCardData = [
     {
-      title: "Total Marks Required",
+      title: "Required Marks",
       valueId: "totalMarksRequired",
-      description: "Marks needed to achieve target average.",
+      description: "To reach target average",
     },
     {
-      title: "Maximum Possible Marks",
+      title: "Maximum Marks ",
       valueId: "totalMarks",
-      description: "Total experiments x maximum marks.",
+      description: "All experiments combined.",
+    },
+    {
+      title: "Suggested Mark",
+      valueId: "roundedAvg",
+      description: "Average rounded marks.",
     },
   ];
 
