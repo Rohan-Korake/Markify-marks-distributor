@@ -1,3 +1,5 @@
+import { renderResult } from "./renderResult.js";
+
 // global declaration
 let distributionData = {};
 
@@ -174,4 +176,6 @@ function distributeMark(assignedMarks) {
   if (values[2]) {
     storeResultData("highMarkCount", values[2]);
   }
+
+  renderResult(resultData);
 }

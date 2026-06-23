@@ -38,41 +38,8 @@
         </p>
       </div>
 
-      <!-- Inputs -->
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-        <!-- Total Experiments -->
-        <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-            Total Experiments
-          </label>
-
-          <input type="number" placeholder="Total Experiment" id="totalExperiment"
-            class="w-full cursor-pointer rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-100/70 dark:bg-slate-800 px-4 py-3 text-sm sm:text-base text-slate-900 dark:text-white outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10" />
-          <p id="totalExperimentError" class="ml-1 mt-1 text-sm text-red-500 hidden"></p>
-        </div>
-
-        <!-- Average Marks -->
-        <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-            Average Marks
-          </label>
-
-          <input type="number" placeholder="Average Marks" id="avgMark"
-            class="w-full cursor-pointer rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-100/70 dark:bg-slate-800 px-4 py-3 text-sm sm:text-base text-slate-900 dark:text-white outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10" />
-          <p id="avgMarkError" class=" ml-1 mt-1 text-sm text-red-500 hidden"></p>
-        </div>
-
-        <!-- Maximum Marks -->
-        <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-            Maximum Marks
-          </label>
-
-          <input type="number" placeholder="Maximum Marks" id="maxMark"
-            class="w-full cursor-pointer rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-100/70 dark:bg-slate-800 px-4 py-3 text-sm sm:text-base text-slate-900 dark:text-white outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10" />
-          <p id="maxMarkError" class="ml-1 mt-1 text-sm text-red-500 hidden"></p>
-        </div>
-      </div>
+      <!-- Inputs field container-->
+      <div id="inputFieldContainer" class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6"></div>
 
       <!-- Button -->
       <div class="mt-6 flex justify-center">
@@ -91,93 +58,23 @@
           Distribution Result
         </h2>
 
-        <div class="mt-6 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <!-- Total Marks Required -->
-          <div
-            class="rounded-3xl bg-white/80 dark:bg-slate-800 p-5 shadow-xl border border-slate-200 dark:border-slate-700 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <p class="text-sm font-medium text-slate-500">
-              Total Marks Required
-            </p>
-            <h3 id="totalMarksRequired" class="mt-2 text-4xl font-bold text-slate-900 dark:text-white">00</h3>
-            <p class="mt-1 text-sm text-slate-500">Marks needed to achieve target average.</p>
-          </div>
+        <!-- marks summary card container  -->
+        <div id="summaryContainer" class="mt-6 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5"> </div>
 
-          <!-- Maximum Possible Marks -->
-          <div
-            class="rounded-3xl bg-white/80 dark:bg-slate-800 p-5 shadow-xl border border-slate-200 dark:border-slate-700 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <p class="text-sm font-medium text-slate-500">
-              Maximum Possible Marks
-            </p>
-            <h3 id="totalMarks" class="mt-2 text-4xl font-bold text-slate-900 dark:text-white">00</h3>
-            <p class="mt-1 text-sm text-slate-500">Total experiments x maximum marks.</p>
-          </div>
-        </div>
-
-        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-          <!-- Low marks -->
-          <div
-            class="rounded-3xl border border-blue-100 dark:border-slate-700 bg-blue-50/80 dark:bg-slate-800 p-4 sm:p-4 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <h3 class="text-lg font-bold text-blue-600"><span id="lowMark">00</span> Marks</h3>
-            <p id="lowMarkCount" class="mt-4 text-4xl sm:text-4xl font-bold text-slate-900 dark:text-white">00</p>
-            <p class="mt-2 text-slate-500">times</p>
-          </div>
-
-          <!-- Mid marks -->
-          <div
-            class="rounded-3xl border border-emerald-100 dark:border-slate-700 bg-emerald-50/80 dark:bg-slate-800 p-4 sm:p-4 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <h3 class="text-lg font-bold text-emerald-600"><span id="midMark">00</span> Marks</h3>
-            <p id="midMarkCount" class="mt-4 text-4xl sm:text-4xl font-bold text-slate-900 dark:text-white">00</p>
-            <p class="mt-2 text-slate-500">times</p>
-          </div>
-
-          <!-- High marks -->
-          <div
-            class="rounded-3xl border border-violet-100 dark:border-slate-700 bg-violet-50/80 dark:bg-slate-800 p-4 sm:p-4 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <h3 class="text-lg font-bold text-violet-600"><span id="highMark">00</span> Marks</h3>
-            <p id="highMarkCount" class="mt-4 text-4xl sm:text-4xl font-bold text-slate-900 dark:text-white">00</p>
-            <p class="mt-2 text-slate-500">times</p>
-          </div>
+        <!-- marks distribution card container -->
+        <div id="distributionCardContainer" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
         </div>
       </div>
+
+      <!-- social link container -->
       <div class="mt-6  flex justify-center ">
-        <div
+        <div id="socialLinkContainer"
           class="flex items-center justify-center gap-6 px-4 py-3 rounded-2xl bg-white/10 dark:bg-slate-900/40 backdrop-blur-xl border border-white/10 dark:border-white/10 shadow-lg shadow-black/10">
-
-          <!-- LinkedIn -->
-          <a href="https://www.linkedin.com/in/rohan-korake-720848342/"
-            class="w-11 h-11 flex items-center justify-center rounded-xl
-      border border-white/10 text-slate-400 hover:text-white hover:bg-blue-500/80 transition-all duration-300 hover:-translate-y-1">
-            <i class="fa-brands fa-linkedin-in text-xl"></i>
-          </a>
-
-          <!-- GitHub -->
-          <a href="https://github.com/Rohan-Korake"
-            class="w-11 h-11 flex items-center justify-center rounded-xl
-      border border-white/10 text-slate-400 hover:text-white hover:bg-cyan-500/80 transition-all duration-300 hover:-translate-y-1">
-            <i class="fa-brands fa-github text-xl"></i>
-          </a>
-
-          <!-- Email -->
-          <a href="mailto:rohannkorake@gmail.com"
-            class="w-11 h-11 flex items-center justify-center rounded-xl
-      border border-white/10 text-slate-400 hover:text-white hover:bg-emerald-500/80 transition-all duration-300 hover:-translate-y-1">
-            <i class="fa-solid fa-envelope text-xl"></i>
-          </a>
-
-          <!-- Portfolio -->
-          <a href="https://rohankorake.vercel.app" target="_blank"
-            class="w-11 h-11 flex items-center justify-center rounded-xl
-      border border-white/10 text-slate-400 hover:text-white hover:bg-violet-500/80 transition-all duration-300 hover:-translate-y-1">
-            <i class="fa-solid fa-globe text-xl"></i>
-          </a>
         </div>
       </div>
     </div>
   </main>
-
-
 </body>
-
 <script src="src/scripts/main.js" type="module"></script>
 
 </html>
