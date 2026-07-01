@@ -11,6 +11,11 @@ export function renderSocialLink() {
       icon: "fa-brands fa-github text-xl",
     },
     {
+      linkAddress: "https://x.com/RohanKorake",
+      hoverColor: "bg-cyan-500/80",
+      icon: "fa-brands fa-x-twitter text-xl",
+    },
+    {
       linkAddress: "mailto:rohannkorake@gmail.com",
       hoverColor: "bg-emerald-500/80",
       icon: "fa-solid fa-envelope text-xl",
